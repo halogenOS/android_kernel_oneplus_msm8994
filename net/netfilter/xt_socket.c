@@ -195,6 +195,10 @@ socket_match(const struct sk_buff *skb, struct xt_action_param *par,
 				       (sk->sk_state == TCP_TIME_WAIT &&
 					inet_twsk(sk)->tw_transparent));
 
+		if (info->flags & XT_SOCKET_RESTORESKMARK && !wildcard &&
+		    transparent)
+			pskb->mark = sk->sk_mark;
+
 		if (sk != skb->sk)
 			xt_socket_put_sk(sk);
 
@@ -353,6 +357,10 @@ socket_mt6_v1_v2_v3(const struct sk_buff *skb, struct xt_action_param *par)
 					inet_sk(sk)->transparent) ||
 				       (sk->sk_state == TCP_TIME_WAIT &&
 					inet_twsk(sk)->tw_transparent));
+
+		if (info->flags & XT_SOCKET_RESTORESKMARK && !wildcard &&
+		    transparent)
+			pskb->mark = sk->sk_mark;
 
 		if (sk != skb->sk)
 			xt_socket_put_sk(sk);
