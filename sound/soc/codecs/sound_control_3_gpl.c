@@ -33,6 +33,7 @@
 extern struct snd_soc_codec *fauxsound_codec_ptr;
 
 extern int high_perf_mode;
+int snd_ctrl_locked = 1;
 
 unsigned int tomtom_read(struct snd_soc_codec *codec, unsigned int reg);
 int tomtom_write(struct snd_soc_codec *codec, unsigned int reg,
@@ -214,6 +215,26 @@ static ssize_t sound_control_version_show(struct kobject *kobj, struct kobj_attr
 			SOUND_CONTROL_MINOR_VERSION);
 }
 
+static ssize_t sound_control_locked_store(struct kobject *kobj,
+                struct kobj_attribute *attr, const char *buf, size_t count)
+{
+	int inp;
+
+	sscanf(buf, "%d", &inp);
+
+	if (inp == 0)
+		snd_ctrl_locked = 0;
+	else
+		snd_ctrl_locked = 1;
+
+	return count;
+}
+
+static ssize_t sound_control_locked_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
+{
+        return sprintf(buf, "%d\n", snd_ctrl_locked);
+}
+
 static struct kobj_attribute high_performance_mode_attribute =
 	__ATTR(highperf_enabled,
 		0666,
@@ -250,6 +271,12 @@ static struct kobj_attribute headphone_pa_gain_attribute =
 		headphone_pa_gain_show,
 		headphone_pa_gain_store);
 
+static struct kobj_attribute sound_control_locked_attribute =
+	__ATTR(gpl_sound_control_locked,
+		0666,
+		sound_control_locked_show,
+		sound_control_locked_store);
+
 static struct kobj_attribute sound_control_version_attribute =
 	__ATTR(gpl_sound_control_version,
 		0444,
@@ -263,6 +290,7 @@ static struct attribute *sound_control_attrs[] =
 		&speaker_gain_attribute.attr,
 		&headphone_gain_attribute.attr,
 		&headphone_pa_gain_attribute.attr,
+		&sound_control_locked_attribute.attr,
 		&sound_control_version_attribute.attr,
 		NULL,
 	};
