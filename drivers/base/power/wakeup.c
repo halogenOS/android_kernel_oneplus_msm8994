@@ -428,7 +428,8 @@ static void wakeup_source_activate(struct wakeup_source *ws)
 {
 	unsigned int cec;
 
-	if (wakeup_source_not_registered(ws))
+	if (WARN(wakeup_source_not_registered(ws),
+			"unregistered wakeup source\n"))
 		return;
 
 	/*
