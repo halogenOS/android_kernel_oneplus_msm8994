@@ -2212,7 +2212,8 @@ static int	synaptics_input_init(struct synaptics_ts_data *ts)
 
 #ifdef SUPPORT_GESTURE
 	set_bit(KEY_F4 , ts->input_dev->keybit);//doulbe-tap resume
-#ifdef VENDOR_EDIT_OXYGEN
+	set_bit(BTN_TOOL_FINGER, ts->input_dev->keybit);
+#if defined(VENDOR_EDIT) || defined(VENDOR_EDIT_OXYGEN)
 	set_bit(KEY_DOUBLE_TAP, ts->input_dev->keybit);
 	set_bit(KEY_GESTURE_CIRCLE, ts->input_dev->keybit);
 	set_bit(KEY_GESTURE_V, ts->input_dev->keybit);
