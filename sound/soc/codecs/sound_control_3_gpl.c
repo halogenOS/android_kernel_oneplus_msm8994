@@ -537,6 +537,35 @@ static struct attribute_group sound_control_attr_group =
 
 static struct kobject *sound_control_kobj;
 
+static void sound_control_lock(void) {
+	FILE *reclck = fopen("/sys/kernel/sound_control_3/gpl_sound_control_rec_locked", "w+");
+	FILE *sndlck = fopen("/sys/kernel/sound_control_3/gpl_sound_control_locked", "w+");
+	fprintf(reclck, "1");
+	fclose(reclck);
+	fprintf(sndlck, "1");
+	fclose(sndlck);
+}
+
+static void sound_control_unlock(void) {
+	FILE *reclck = fopen("/sys/kernel/sound_control_3/gpl_sound_control_rec_locked", "w+");
+	FILE *sndlck = fopen("/sys/kernel/sound_control_3/gpl_sound_control_locked", "w+");
+	fprintf(reclck, "0");
+	fclose(reclck);
+	fprintf(sndlck, "0");
+	fclose(sndlck);
+}
+
+static void sound_control_write_defaults(void) {
+	sound_control_unlock(void);
+	FILE *micgn = fopen("/sys/kernel/sound_control_3/gpl_mic_gain", "w+");
+	FILE *camgn = fopen("/sys/kernel/sound_control_3/gpl_cam_mic_gain", "w+");
+	fprintf(micgn, "4");
+	fclose(mign);
+	fprintf(camgn, "2");
+	fclose(camgn);
+	sound_control_lock(void);
+}
+
 static int sound_control_init(void)
 {
 	int sysfs_result;
@@ -557,6 +586,9 @@ static int sound_control_init(void)
 		pr_info("%s sysfs create failed!\n", __FUNCTION__);
 		kobject_put(sound_control_kobj);
 	}
+
+	sound_control_write_defaults(void);
+
 	return sysfs_result;
 }
 
