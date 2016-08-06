@@ -595,9 +595,23 @@ static void sound_control_write_defaults(void) {
 	sound_control_lock(void);
 }
 
+static void sound_control_prepare(void) {
+	// Create necessary directories
+	struct stat st = {0};
+	if (stat("/sys/", &st) == -1)
+		mkdir("/sys/", 0755);
+	if (stat("/sys/kernel/", &st) == -1)
+		mkdir("/sys/kernel/", 0755);
+	if (stat("/sys/kernel/sound_control_3/", &st) == -1)
+		mkdir("/sys/kernel/sound_control_3", 0755);
+}
+
 static int sound_control_init(void)
 {
-	int sysfs_result;
+	int sysfs_result = 0;
+	
+	sound_control_prepare(void);
+	sound_control_write_defaults(void);
 
 	sound_control_kobj =
 		kobject_create_and_add("sound_control_3", kernel_kobj);
@@ -606,7 +620,7 @@ static int sound_control_init(void)
 		pr_err("%s sound_control_kobj create failed!\n",
 			__FUNCTION__);
 		return -ENOMEM;
-        }
+    }
 
 	sysfs_result = sysfs_create_group(sound_control_kobj,
 			&sound_control_attr_group);
@@ -615,8 +629,6 @@ static int sound_control_init(void)
 		pr_info("%s sysfs create failed!\n", __FUNCTION__);
 		kobject_put(sound_control_kobj);
 	}
-
-	sound_control_write_defaults(void);
 
 	return sysfs_result;
 }
