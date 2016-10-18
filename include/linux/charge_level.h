@@ -1,5 +1,7 @@
 /*
  * Author: andip71, 05.11.2014
+ * 
+ * Modified by Simao Gomes Viana
  *
  * Version 1.1
  * 
@@ -21,10 +23,10 @@ extern int charge_level;
 extern int charge_info_level_cur;
 extern int charge_info_level_req;
 
-#define AC_CHARGE_LEVEL_DEFAULT 0	// 0 = stock charging logic will apply
+#define AC_CHARGE_LEVEL_DEFAULT 1	// 0 = stock charging logic will apply
 #define AC_CHARGE_LEVEL_MIN 0
-#define AC_CHARGE_LEVEL_MAX 2200
+#define AC_CHARGE_LEVEL_MAX 2000
 
-#define USB_CHARGE_LEVEL_DEFAULT 0	// 0 = stock charging logic will apply
+#define USB_CHARGE_LEVEL_DEFAULT 1	// 0 = stock charging logic will apply
 #define USB_CHARGE_LEVEL_MIN 0
-#define USB_CHARGE_LEVEL_MAX 1600
+#define USB_CHARGE_LEVEL_MAX 1500
