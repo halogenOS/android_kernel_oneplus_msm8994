@@ -1236,13 +1236,15 @@ out_unlock:
 }
 
 /*
- * FOLL_FORCE can write to even unwritable pmd's, but only
- * after we've gone through a COW cycle and they are dirty.
+ * foll_force can write to even unwritable pmd's, but only
+ * after we've gone through a cow cycle and they are dirty.
  */
-static inline bool can_follow_write_pmd(pmd_t pmd, unsigned int flags)
+static inline bool can_follow_write_pmd(pmd_t pmd, struct page *page,
+					unsigned int flags)
 {
 	return pmd_write(pmd) ||
-	       ((flags & FOLL_FORCE) && (flags & FOLL_COW) && pte_dirty(pmd_pte(pmd)));
+		((flags & FOLL_FORCE) && (flags & FOLL_COW) &&
+		 page && PageAnon(page));
 }
 
 struct page *follow_trans_huge_pmd(struct vm_area_struct *vma,
@@ -1264,6 +1266,10 @@ struct page *follow_trans_huge_pmd(struct vm_area_struct *vma,
 
 	page = pmd_page(*pmd);
 	VM_BUG_ON(!PageHead(page));
+
+	if (flags & FOLL_WRITE && !can_follow_write_pmd(*pmd, page, flags))
+		return NULL;
+
 	if (flags & FOLL_TOUCH) {
 		pmd_t _pmd;
 		/*
