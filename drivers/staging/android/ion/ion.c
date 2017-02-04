@@ -689,6 +689,7 @@ static void ion_free_nolock(struct ion_client *client, struct ion_handle *handle
 	ion_handle_put_nolock(handle);
 }
 
+/* Must hold the client lock */
 static void user_ion_free_nolock(struct ion_client *client,
 				 struct ion_handle *handle)
 {
