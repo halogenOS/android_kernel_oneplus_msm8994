@@ -1581,8 +1581,13 @@ endif
 
 KBUILD_CPPFLAGS += $(CDEFINES)
 
-# Use Os even if we use other optimization levels globally
-EXTRA_CFLAGS += -Os
+EXTRA_CFLAGS += -O1 \
+    -mtune=cortex-a57.cortex-a53 \
+    -mcpu=cortex-a57.cortex-a53 \
+    -frerun-cse-after-loop \
+    -foptimize-sibling-calls \
+	-fno-strict-aliasing \
+    -finline-functions
 
 # Currently, for versions of gcc which support it, the kernel Makefile
 # is disabling the maybe-uninitialized warning.  Re-enable it for the
