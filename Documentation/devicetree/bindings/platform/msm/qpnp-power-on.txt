@@ -62,6 +62,8 @@ Optional properties:
 - qcom,cfg-shutdown-for-hard-reset	Boolean property, if present PMIC's PS_HOLD reset type
 					is configured for SHUTDOWN in case of HARD RESET.
 
+- qcom,pon-reset-off		Boolean property which if set will store the hardware
+				power off in the system shut-down state, instead of a reset-state.
 
 All the below properties are in the sub-node section (properties of the child
 node).
