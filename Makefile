@@ -384,7 +384,8 @@ KBUILD_CFLAGS   := -O2 -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -ftree-loop-vectorize -ftree-loop-distribute-patterns -ftree-slp-vectorize \
            -fvect-cost-model -ftree-partial-pre \
            -fgcse-lm -fgcse-sm -fsched-spec-load -fsingle-precision-constant \
-		   -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53
+		   -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 \
+		   -Wno-bool-operation -Wno-nonnull -Wno-switch-unreachable -Wno-format-truncation -Wno-format-overflow -Wno-duplicate-decl-specifier -Wno-memset-elt-size -Wno-int-in-bool-context
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
