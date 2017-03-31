@@ -112,8 +112,8 @@
 #define MSM_HOTPLUG                     "msm_hotplug"
 #define HOTPLUG_ENABLED                 0
 #define DEFAULT_UPDATE_RATE             200
-#define START_DELAY                     20000
-#define DEFAULT_HISTORY_SIZE            10
+#define START_DELAY                     10
+#define DEFAULT_HISTORY_SIZE            8
 #define DEFAULT_DOWN_LOCK_DUR           1000
 #define DEFAULT_MIN_CPUS_ONLINE         1
 #define DEFAULT_MAX_CPUS_ONLINE         LITTLE_CORES
