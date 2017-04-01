@@ -111,7 +111,7 @@
 
 #define MSM_HOTPLUG                     "msm_hotplug"
 #define HOTPLUG_ENABLED                 0
-#define DEFAULT_UPDATE_RATE             200
+#define DEFAULT_UPDATE_RATE             150
 #define START_DELAY                     10
 #define DEFAULT_HISTORY_SIZE            8
 #define DEFAULT_DOWN_LOCK_DUR           1000
@@ -129,7 +129,7 @@
 #define DEFAULT_IO_IS_BUSY              false
 
 // Use for msm_hotplug_resume_timeout
-#define HOTPLUG_TIMEOUT                 2000
+#define HOTPLUG_TIMEOUT                 1600
 
 unsigned int msm_enabled = HOTPLUG_ENABLED;
 
