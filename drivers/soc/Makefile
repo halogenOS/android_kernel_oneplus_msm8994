@@ -1,3 +1,3 @@
 obj-$(CONFIG_ARCH_MSM)		+= qcom/
-obj-y ?=
-obj-y += -O3
+ccflags-y ?=
+ccflags-y += -O3
