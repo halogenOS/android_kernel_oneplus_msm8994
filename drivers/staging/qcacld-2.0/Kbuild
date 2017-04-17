@@ -1581,7 +1581,8 @@ endif
 
 KBUILD_CPPFLAGS += $(CDEFINES)
 
-EXTRA_CFLAGS += -O1 \
+EXTRA_CFLAGS += -Wno-maybe-uninitialized\
+    -O1 \
     -mtune=cortex-a57.cortex-a53 \
     -mcpu=cortex-a57.cortex-a53 \
     -frerun-cse-after-loop \
@@ -1594,7 +1595,7 @@ EXTRA_CFLAGS += -O1 \
 # WLAN driver.  Note that we must use EXTRA_CFLAGS here so that it
 # will override the kernel settings.
 ifeq ($(call cc-option-yn, -Wmaybe-uninitialized),y)
-EXTRA_CFLAGS += -Wmaybe-uninitialized
+#EXTRA_CFLAGS += -Wmaybe-uninitialized
 endif
 
 # If the module name is not "wlan", then the define MULTI_IF_NAME to be the
