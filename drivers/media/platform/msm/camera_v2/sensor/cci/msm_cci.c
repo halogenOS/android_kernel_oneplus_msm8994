@@ -735,7 +735,7 @@ static int32_t msm_cci_i2c_read(struct v4l2_subdev *sd,
 		return -EINVAL;
 	}
 
-	mutex_lock(&cci_dev->cci_master_info[master].mutex_q[queue]);
+	mutex_lock(&cci_dev->cci_master_info[master].mutex);
 
 	/*
 	 * Call validate queue to make sure queue is empty before starting.
