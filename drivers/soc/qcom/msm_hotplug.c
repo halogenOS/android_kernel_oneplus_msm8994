@@ -514,7 +514,7 @@ static void big_up(void)
             if (hotplug.target_cpus_big <= num_online_big_cpus())
                 break;
 #ifdef CONFIG_THERMAL_MONITOR
-            // Only up a cpu if thermal control allows it !
+            // Only up a big cpu if thermal control allows it !
             if(!msm_thermal_deny_cpu_up(cpu)) {
 #endif
                 cpu_up(cpu);
@@ -548,22 +548,10 @@ static void big_down(void)
             if (prevent_big_off && lowest_cpu == stats.total_cpus) {
                 // Turn on first of big cores
                 if (!cpu_online(stats.total_cpus)) {
-#ifdef CONFIG_THERMAL_MONITOR
-                    // Only up a cpu if thermal control allows it !
-                    if(!msm_thermal_deny_cpu_up(stats.total_cpus)) {
-#endif
-                        cpu_up(stats.total_cpus);
-                        if (unlikely(debug_dmesg)) {
-                            pr_info("[msm_hotplug] brought up cpu%d\n", stats.total_cpus);
-                        }
-#ifdef CONFIG_THERMAL_MONITOR
-                    } else {
-                        if (unlikely(debug_dmesg)) {
-                            pr_info("[msm_hotplug] bringup of cpu%d denied by msm_thermal\n",
-                                    stats.total_cpus);
-                        }
+                    cpu_up(stats.total_cpus);
+                    if (unlikely(debug_dmesg)) {
+                        pr_info("[msm_hotplug] brought up cpu%d\n", stats.total_cpus);
                     }
-#endif
                 }
                 continue;
             }
@@ -647,22 +635,11 @@ static void little_up(void)
             continue;
         if (hotplug.target_cpus <= num_online_little_cpus())
             break;
-#ifdef CONFIG_THERMAL_MONITOR
-        // Only up a cpu if thermal control allows it !
-        if(!msm_thermal_deny_cpu_up(cpu)) {
-#endif
-            cpu_up(cpu);
-            apply_down_lock(cpu);
-            if (unlikely(debug_dmesg)) {
-                pr_info("[msm_hotplug] brought up cpu%d\n", cpu);
-            }
-#ifdef CONFIG_THERMAL_MONITOR
-        } else {
-            if (unlikely(debug_dmesg)) {
-                pr_info("[msm_hotplug] bringup of cpu%d denied by msm_thermal\n", cpu);
-            }
+        cpu_up(cpu);
+        apply_down_lock(cpu);
+        if (unlikely(debug_dmesg)) {
+            pr_info("[msm_hotplug] brought up cpu%d\n", cpu);
         }
-#endif
     }
 }
 
@@ -967,8 +944,8 @@ static int __cpuinit msm_hotplug_start(int start_immediately)
         if (cpu == 0)
             continue;
 #ifdef CONFIG_THERMAL_MONITOR
-        // Only up a cpu if thermal control allows it !
-        if(!msm_thermal_deny_cpu_up(cpu)) {
+        // Only up a big cpu if thermal control allows it !
+        if(cpu < 5 || !msm_thermal_deny_cpu_up(cpu)) {
 #endif
             cpu_up(cpu);
             apply_down_lock(cpu);
