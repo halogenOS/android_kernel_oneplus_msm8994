@@ -1481,7 +1481,6 @@ static int msm_venc_start_streaming(struct vb2_queue *q, unsigned int count)
 	}
 
 	qpnp_disable_haptics(true);
-stream_start_failed:
 	return rc;
 }
 
