@@ -515,13 +515,6 @@ static int _snd_timer_stop(struct snd_timer_instance *timeri, int event)
 
 	if (timeri->flags & SNDRV_TIMER_IFLG_SLAVE) {
 		spin_lock_irqsave(&slave_active_lock, flags);
-		if (!keep_flag) {
-			timeri->flags &= ~SNDRV_TIMER_IFLG_RUNNING;
-			list_del_init(&timeri->ack_list);
-			list_del_init(&timeri->active_list);
-			spin_unlock_irqrestore(&slave_active_lock, flags);
-			return -EBUSY;
-		}
 		if (timeri->timer)
 			spin_lock(&timeri->timer->lock);
 		timeri->flags &= ~SNDRV_TIMER_IFLG_RUNNING;
