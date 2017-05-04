@@ -3075,7 +3075,8 @@ static long msm_cpp_subdev_fops_compat_ioctl(struct file *file,
 	struct msm_camera_v4l2_ioctl32_t up32_ioctl;
 	struct msm_cpp_clock_settings_t clock_settings;
 	struct msm_pproc_queue_buf_info k_queue_buf;
-	struct msm_cpp_stream_buff_info_t k_cpp_buff_info;
+	struct msm_cpp_stream_buff_info32_t k32_cpp_buff_info;
+	struct msm_cpp_stream_buff_info_t k64_cpp_buff_info;
 	struct msm_cpp_frame_info32_t k32_frame_info;
 	struct msm_cpp_frame_info_t k64_frame_info;
 	void __user *up = (void __user *)arg;
@@ -3216,8 +3217,19 @@ static long msm_cpp_subdev_fops_compat_ioctl(struct file *file,
 	case VIDIOC_MSM_CPP_ENQUEUE_STREAM_BUFF_INFO32:
 	case VIDIOC_MSM_CPP_DELETE_STREAM_BUFF32:
 	{
-		struct msm_cpp_stream_buff_info32_t *u32_cpp_buff_info =
-		  (struct msm_cpp_stream_buff_info32_t *)kp_ioctl.ioctl_ptr;
+		if (kp_ioctl.len != sizeof(
+			struct msm_cpp_stream_buff_info32_t))
+			return -EINVAL;
+		else
+			kp_ioctl.len =
+				sizeof(struct msm_cpp_stream_buff_info_t);
+
+		if (copy_from_user(&k32_cpp_buff_info,
+			(void __user *)kp_ioctl.ioctl_ptr,
+			sizeof(k32_cpp_buff_info))) {
+			pr_err("error: cannot copy user pointer\n");
+			return -EFAULT;
+		}
 
 		memset(&k64_cpp_buff_info, 0, sizeof(k64_cpp_buff_info));
 		k64_cpp_buff_info.identity = k32_cpp_buff_info.identity;
@@ -3226,16 +3238,6 @@ static long msm_cpp_subdev_fops_compat_ioctl(struct file *file,
 			compat_ptr(k32_cpp_buff_info.buffer_info);
 		kp_ioctl.ioctl_ptr = (void *)&k64_cpp_buff_info;
 		is_copytouser_req = false;
-
-		kp_ioctl.ioctl_ptr = (void *)&k_cpp_buff_info;
-		if (is_compat_task()) {
-			if (kp_ioctl.len != sizeof(
-				struct msm_cpp_stream_buff_info32_t))
-				return -EINVAL;
-			else
-				kp_ioctl.len =
-				  sizeof(struct msm_cpp_stream_buff_info_t);
-		}
 		if (cmd == VIDIOC_MSM_CPP_ENQUEUE_STREAM_BUFF_INFO32)
 			cmd = VIDIOC_MSM_CPP_ENQUEUE_STREAM_BUFF_INFO;
 		else if (cmd == VIDIOC_MSM_CPP_DELETE_STREAM_BUFF32)
