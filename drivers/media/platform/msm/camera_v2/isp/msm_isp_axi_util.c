@@ -37,7 +37,7 @@ int msm_isp_axi_create_stream(
 
 	if (i == MAX_NUM_STREAM) {
 		pr_err("%s: No free stream\n", __func__);
-		return rc;
+		return -EINVAL;
 	}
 
 	if ((axi_data->stream_handle_cnt << 8) == 0)
