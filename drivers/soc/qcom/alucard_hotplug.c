@@ -2,6 +2,7 @@
  * Author: Alucard_24@XDA
  *
  * Copyright 2012 Alucard_24@XDA
+ * Copyright (C) 2017 The halogenOS Project
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -68,15 +69,11 @@ static struct hotplug_tuners {
 #endif
 } hotplug_tuners_ins = {
 	.hotplug_sampling_rate = 30,
-#ifdef CONFIG_MACH_JF
-	.hotplug_enable = 0,
-#else
-	.hotplug_enable = 0,
-#endif
-	.min_cpus_online = 1,
+	.hotplug_enable = 1,
+	.min_cpus_online = 3,
 	.maxcoreslimit = NR_CPUS,
-	.maxcoreslimit_sleep = 1,
-	.hp_io_is_busy = 0,
+	.maxcoreslimit_sleep = 3,
+	.hp_io_is_busy = 1,
 #if defined(CONFIG_POWERSUSPEND) || \
 	defined(CONFIG_HAS_EARLYSUSPEND)
 	.hotplug_suspend = 0,
@@ -836,35 +833,44 @@ static int __init alucard_hotplug_init(void)
 	int ret;
 	unsigned int cpu;
 	unsigned int hotplug_freq[NR_CPUS][2] = {
-#ifdef CONFIG_MACH_LGE
-		{0, 1497600},
-		{652800, 1190400},
-		{652800, 1190400},
-		{652800, 0}
-#else
-		{0, 1242000},
-		{810000, 1566000},
-		{918000, 1674000},
-		{1026000, 0}
-#endif
+		{384000, 1555000},
+		{384000, 1555000},
+		{0, 1248000},
+		{0, 960000},
+		{384000, 1766000},
+		{0, 1766000},
+		{0, 1536000},
+		{0, 960000}
 	};
 	unsigned int hotplug_load[NR_CPUS][2] = {
 		{0, 60},
-		{30, 65},
-		{30, 65},
-		{30, 0}
+		{0, 65},
+		{25, 65},
+		{25, 80},
+		{0, 65},
+		{25, 70},
+		{20, 80},
+		{25, 75}
 	};
 	unsigned int hotplug_rq[NR_CPUS][2] = {
 		{0, 100},
 		{100, 200},
 		{200, 300},
-		{300, 0}
+		{400, 500},
+		{300, 400},
+		{500, 600},
+		{600, 700},
+		{700, 800}
 	};
 	unsigned int hotplug_rate[NR_CPUS][2] = {
 		{1, 1},
+		{1, 1},
 		{4, 1},
 		{4, 1},
-		{4, 1}
+		{1, 1},
+		{4, 1},
+		{4, 1},
+		{2, 1}
 	};
 
 	ret = sysfs_create_group(kernel_kobj, &alucard_hotplug_attr_group);
@@ -902,9 +908,9 @@ static void __exit alucard_hotplug_exit(void)
 
 	sysfs_remove_group(kernel_kobj, &alucard_hotplug_attr_group);
 }
-MODULE_AUTHOR("Alucard_24@XDA");
+MODULE_AUTHOR("Alucard_24@XDA & xdevs23");
 MODULE_DESCRIPTION("'alucard_hotplug' - A cpu hotplug driver for "
-	"capable processors");
+	"capable processors - optimized for OnePlus 2");
 MODULE_LICENSE("GPL");
 
 late_initcall(alucard_hotplug_init);
