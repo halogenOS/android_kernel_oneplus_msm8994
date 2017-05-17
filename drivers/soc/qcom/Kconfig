@@ -643,6 +643,13 @@ config KERNEL_TEXT_MPU_PROT
 	  all masters; Write access is only permited to the
 	  secure world.
 
+config HALOPLUG
+	bool "Enable haloplug cpu hotplug driver"
+		default n
+	help
+		Enables the haloplug driver which is optimized for big.LITTLE
+		octa core processors and gives good battery-performance ratio.
+
 source "drivers/soc/qcom/memshare/Kconfig"
 
 endif # ARCH_MSM
