@@ -92,3 +92,4 @@ obj-y += project_info.o
 obj-y += boot_mode.o
 ##
 obj-$(CONFIG_ALUCARD_HOTPLUG) += alucard_hotplug.o
+obj-$(CONFIG_HALOPLUG) += haloplug.o
