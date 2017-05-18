@@ -41,6 +41,9 @@
 #include <linux/earlysuspend.h>
 #endif
 
+#pragma GCC push_options
+#pragma GCC optimize ("Ofast")
+
 struct hotplug_cpuinfo {
 #ifndef CONFIG_haloplug_HOTPLUG_USE_CPU_UTIL
 	u64 prev_cpu_wall;
@@ -914,6 +917,8 @@ static void __exit haloplug_hotplug_exit(void)
 
 	sysfs_remove_group(kernel_kobj, &haloplug_hotplug_attr_group);
 }
+
+#pragma GCC pop_options
 
 MODULE_AUTHOR("xdevs23 & haloplug_24@XDA");
 MODULE_DESCRIPTION("haloplug - The battery-performance-ratio hotplug");
