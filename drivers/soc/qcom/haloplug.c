@@ -851,12 +851,12 @@ static int __init haloplug_hotplug_init(void)
 	unsigned int hotplug_load[NR_CPUS][2] = {
 		{0, 60},
 		{0, 60},
-		{0, 65},
+		{0, 60},
 		{25, 80},
-		{0, 65},
-		{25, 70},
-		{20, 80},
-		{25, 75}
+		{0, 60},
+		{20, 65},
+		{25, 80},
+		{25, 80}
 	};
 	unsigned int hotplug_rq[NR_CPUS][2] = {
 		{0, 100},
