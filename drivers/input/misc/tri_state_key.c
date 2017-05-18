@@ -50,11 +50,6 @@ static int keyCode_slider_bottom = KEYCODE_BASE + 3;
 #define MODE_PRIORITY_ONLY 602
 #define MODE_NONE 603
 
-static int current_mode = 0;
-static int keyCode_slider_top = MODE_ALARMS_ONLY;
-static int keyCode_slider_middle = MODE_PRIORITY_ONLY;
-static int keyCode_slider_bottom = MODE_NONE;
-
 struct switch_dev_data {
 	//tri_mode_t last_type;
 	//tri_mode_t mode_type;
