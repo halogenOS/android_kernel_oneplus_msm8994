@@ -81,8 +81,12 @@ static int fake_authentic = 0;
 #define AUTO_CHARGING_BATTERY_TEMP_HYST_FROM_COLD_TO_COOL     20
 #define CHG_CURRENT_500MA                                     500
 #define CHG_CURRENT_300MA                                     300
+#define CHG_CURRENT_700MA                                     700
 #define CHG_CURRENT_900MA                                     900
 #define CHG_CURRENT_1500MA                                    1500
+#define CHG_CURRENT_2000MA                                    2000
+#define CHG_CURRENT_USB                                       CHG_CURRENT_700MA
+#define CHG_CURRENT_AC                                        CHG_CURRENT_2000MA
 #define CHARGER_SOFT_OVP_VOLTAGE		5800
 #define CHARGER_SOFT_UVP_VOLTAGE		4300
 #define CHARGER_VOLTAGE_NORMAL		    5000
@@ -3604,8 +3608,13 @@ static void smbchg_external_power_changed(struct power_supply *psy)
 	if (rc < 0)
 		dev_err(chip->dev,
 			"could not read USB current_max property, rc=%d\n", rc);
-	else
+	else {
+		if (current_limit == 500) {
+			// We're on usb, so allow more
+			current_limit = CHG_CURRENT_USB;
+		}
 		current_limit = prop.intval / 1000;
+	}
 
 	if(0!=current_limit)
 	pr_err("current_limit = %d\n", current_limit);
