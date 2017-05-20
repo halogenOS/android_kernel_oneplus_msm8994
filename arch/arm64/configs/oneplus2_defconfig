@@ -1,4 +1,4 @@
-CONFIG_LOCALVERSION="-halogenOS-fruityapricot"
+CONFIG_LOCALVERSION="-halogenOS-SuperfruityApricot"
 # CONFIG_SYSVIPC is not set
 # CONFIG_SYSVIPC_SYSCTL is not set
 CONFIG_AUDIT=y
