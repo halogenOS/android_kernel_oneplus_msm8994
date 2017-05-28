@@ -82,11 +82,11 @@ static struct hotplug_tuners {
 	struct mutex alu_hotplug_mutex;
 #endif
 } hotplug_tuners_ins = {
-	.hotplug_sampling_rate = 60,
+	.hotplug_sampling_rate = 68,
 	.hotplug_enable = 1,
-	.min_cpus_online = 3,
+	.min_cpus_online = 4,
 	.maxcoreslimit = NR_CPUS,
-	.maxcoreslimit_sleep = 5,
+	.maxcoreslimit_sleep = 6,
 	.hp_io_is_busy = 1,
 #if defined(CONFIG_POWERSUSPEND) || \
 	defined(CONFIG_HAS_EARLYSUSPEND)
@@ -855,11 +855,11 @@ static int __init haloplug_hotplug_init(void)
 		{0, 60},
 		{0, 60},
 		{0, 60},
-		{25, 80},
+		{20, 70},
 		{0, 60},
-		{20, 65},
-		{25, 80},
-		{25, 80}
+		{15, 65},
+		{20, 75},
+		{30, 85}
 	};
 	unsigned int hotplug_rq[NR_CPUS][2] = {
 		{0, 100},
@@ -875,11 +875,11 @@ static int __init haloplug_hotplug_init(void)
 		{1, 1},
 		{1, 1},
 		{1, 1},
-		{4, 1},
+		{3, 1},
 		{1, 1},
-		{4, 1},
-		{4, 1},
-		{2, 1}
+		{2, 1},
+		{3, 1},
+		{4, 1}
 	};
 
 	ret = sysfs_create_group(kernel_kobj, &haloplug_hotplug_attr_group);
