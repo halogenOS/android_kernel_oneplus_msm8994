@@ -1,6 +1,7 @@
 
 ccflags-y ?=
 ccflags-y += -O3 \
+    -fexpensive-optimizations \
     -fno-defer-pop \
     -ffp-contract=fast \
     -fgcse-sm \
