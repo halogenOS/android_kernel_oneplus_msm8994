@@ -86,7 +86,7 @@ static struct hotplug_tuners {
 	.hotplug_enable = 1,
 	.min_cpus_online = 4,
 	.maxcoreslimit = NR_CPUS,
-	.maxcoreslimit_sleep = 6,
+	.maxcoreslimit_sleep = 5,
 	.hp_io_is_busy = 1,
 #if defined(CONFIG_POWERSUSPEND) || \
 	defined(CONFIG_HAS_EARLYSUSPEND)
@@ -254,8 +254,7 @@ static void __ref hotplug_work_fn(struct work_struct *work)
 			check_up = (pcpu_info->cur_up_rate % pcpu_info->up_rate == 0);
 			check_down = (pcpu_info->cur_down_rate % pcpu_info->down_rate == 0);
 
-			if (cpu > 2 && cpu != 4
-				&& ((online_cpus - offline_cpu) > upmaxcoreslimit)) {
+			if (((online_cpus - offline_cpu) > upmaxcoreslimit)) {
 					hotplug_onoff[cpu] = OFF;
 					pcpu_info->cur_up_rate = 1;
 					pcpu_info->cur_down_rate = 1;
@@ -318,7 +317,7 @@ static void __ref hotplug_work_fn(struct work_struct *work)
 	put_online_cpus();
 
 	for (cpu = 1; cpu < NR_CPUS; cpu++) {
-		if (hotplug_onoff[cpu] == ON || cpu <= 3 || cpu == 5) {
+		if (hotplug_onoff[cpu] == ON || cpu <= 2 || cpu == 4) {
 			cpu_up(cpu);
 		} else if (hotplug_onoff[cpu] == OFF) {
 			cpu_down(cpu);
@@ -865,8 +864,8 @@ static int __init haloplug_hotplug_init(void)
 		{0, 100},
 		{100, 200},
 		{200, 300},
-		{400, 500},
 		{300, 400},
+		{400, 500},
 		{500, 600},
 		{600, 700},
 		{700, 800}
@@ -877,7 +876,7 @@ static int __init haloplug_hotplug_init(void)
 		{1, 1},
 		{3, 1},
 		{1, 1},
-		{2, 1},
+		{3, 1},
 		{3, 1},
 		{4, 1}
 	};
