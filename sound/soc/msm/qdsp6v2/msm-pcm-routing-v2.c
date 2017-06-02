@@ -173,10 +173,6 @@ static void msm_pcm_routing_cfg_pp(int port_id, int copp_idx, int topology,
 					__func__, topology, port_id, rc);
 		}
 		break;
-	case ADM_CMD_COPP_OPEN_TOPOLOGY_ID_DTS_HPX:
-		pr_debug("%s: DTS_EAGLE_COPP_TOPOLOGY_ID\n", __func__);
-		msm_dts_eagle_init_post(port_id, copp_idx);
-		break;
 #ifdef VENDOR_EDIT
 //#lifei@OnePlus.MultiMediaService, 2016/01/11 add set/get dsp interface
     case ADM_CMD_COPP_OPEN_TOPOLOGY_ID_DIRAC:
