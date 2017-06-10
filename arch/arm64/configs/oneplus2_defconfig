@@ -1,4 +1,4 @@
-CONFIG_LOCALVERSION="-halogenOS-SourSweetCherry-test"
+CONFIG_LOCALVERSION="-halogenOS-PowerfulDragonFruit"
 # CONFIG_SYSVIPC is not set
 # CONFIG_SYSVIPC_SYSCTL is not set
 CONFIG_AUDIT=y
