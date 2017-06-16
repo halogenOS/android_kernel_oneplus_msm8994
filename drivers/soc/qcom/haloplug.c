@@ -919,7 +919,7 @@ static void __exit haloplug_hotplug_exit(void)
 
 #pragma GCC pop_options
 
-MODULE_AUTHOR("xdevs23 & haloplug_24@XDA");
+MODULE_AUTHOR("xdevs23 & Alucard_24@XDA");
 MODULE_DESCRIPTION("haloplug - The battery-performance-ratio hotplug");
 MODULE_LICENSE("GPLv2");
 
