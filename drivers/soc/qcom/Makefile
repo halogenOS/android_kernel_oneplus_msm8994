@@ -91,4 +91,3 @@ obj-$(CONFIG_MSM_PACMAN)        += msm_pacman.o
 obj-y += project_info.o
 obj-y += boot_mode.o
 ##
-obj-$(CONFIG_HALOPLUG) += haloplug.o
