@@ -2713,7 +2713,7 @@ static int init_synaptics_proc(void)
 	}
 
 #ifdef SUPPORT_GESTURE
-	prEntry_tmp = proc_create( "gesture_enable", 0666, prEntry_tp, &tp_gesture_proc_fops);
+	prEntry_tmp = proc_create("enable", 0666, prEntry_tp, &tp_gesture_proc_fops);
 	if(prEntry_tmp == NULL){
 		ret = -ENOMEM;
 		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
@@ -2731,19 +2731,31 @@ static int init_synaptics_proc(void)
 		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
 	}
 
-	prEntry_tmp = proc_create("camera_enable", 0666, prEntry_tp, &camera_enable_proc_fops);
+	prEntry_tmp = proc_create("letter_o_enable", 0666, prEntry_tp, &camera_enable_proc_fops);
 	if(prEntry_tmp == NULL){
 		ret = -ENOMEM;
 		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
 	}
 
-	prEntry_tmp = proc_create("music_enable", 0666, prEntry_tp, &music_enable_proc_fops);
+	prEntry_tmp = proc_create("left_arrow_enable", 0666, prEntry_tp, &music_enable_proc_fops);
 	if(prEntry_tmp == NULL){
 		ret = -ENOMEM;
 		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
 	}
 
-	prEntry_tmp = proc_create("flashlight_enable", 0666, prEntry_tp, &flashlight_enable_proc_fops);
+	prEntry_tmp = proc_create("right_arrow_enable", 0666, prEntry_tp, &music_enable_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
+
+	prEntry_tmp = proc_create("double_swipe_enable", 0666, prEntry_tp, &music_enable_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
+
+	prEntry_tmp = proc_create("down_arrow_enable", 0666, prEntry_tp, &flashlight_enable_proc_fops);
 	if(prEntry_tmp == NULL){
 		ret = -ENOMEM;
 		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
