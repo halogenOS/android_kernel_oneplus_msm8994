@@ -65,6 +65,9 @@
 
 #define ONEPLUS_EDIT  //Onplus modify for msm8996 platform and 15801 HW
 
+#pragma GCC push_options
+#pragma GCC optimize ("Ofast")
+
 static const char * const pctl_names[] = {
 	"fpc1020_spi_active",
 	"fpc1020_reset_reset",
@@ -1247,6 +1250,8 @@ static void __exit fpc1020_exit(void)
 	pr_info("%s\n", __func__);
 	spi_unregister_driver(&fpc1020_driver);
 }
+
+#pragma GCC pop_options
 
 module_init(fpc1020_init);
 module_exit(fpc1020_exit);
