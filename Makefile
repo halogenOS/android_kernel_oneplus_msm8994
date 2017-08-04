@@ -599,6 +599,15 @@ KBUILD_CFLAGS   += $(call cc-option,-fno-store-merging,)
 KBUILD_CFLAGS	+= -O2
 KBUILD_CFLAGS += $(call cc-disable-warning,maybe-uninitialized)
 KBUILD_CFLAGS += $(call cc-disable-warning,array-bounds)
+# Disable certain new GCC 7.1.x warnings
+KBUILD_CFLAGS += $(call cc-disable-warning,bool-compare,)
+KBUILD_CFLAGS += $(call cc-disable-warning,misleading-indentation,)
+KBUILD_CFLAGS += $(call cc-disable-warning,duplicate-decl-specifier)
+KBUILD_CFLAGS += $(call cc-disable-warning,bool-operation)
+KBUILD_CFLAGS += $(call cc-disable-warning,format-overflow)
+KBUILD_CFLAGS += $(call cc-disable-warning,parentheses)
+KBUILD_CFLAGS += $(call cc-disable-warning,stringop-overflow)
+KBUILD_CFLAGS += $(call cc-disable-warning,int-in-bool-context)
 
 include $(srctree)/arch/$(SRCARCH)/Makefile
 
