@@ -1,4 +1,4 @@
-CONFIG_LOCALVERSION="-halogenOS-OreoHoneydewMelon"
+# CONFIG_LOCALVERSION is not set
 # CONFIG_SYSVIPC is not set
 # CONFIG_SYSVIPC_SYSCTL is not set
 CONFIG_AUDIT=y
